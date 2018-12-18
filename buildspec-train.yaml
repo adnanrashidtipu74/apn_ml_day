@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo "Installing wget, boto3 and sagemaker"
+      - pip3 install wget
+      - pip3 install boto3
+      - pip3 install sagemaker
+  build:
+    commands:
+      - echo "Running train.py"
+      - python3 train.py "arn:aws:iam::586768923447:role/service-role/AmazonSageMaker-ExecutionRole-20180823T153503" "peerjako-ml-lab-movieuserdata" "peerjako-ml-lab" "sagemakerstack" "1234"
+  post_build:
+    commands:
+      - echo "Cleaning. We leave ua.test for later predictor tests"
+      - rm -f u.data
+      - rm -f ua.base*
+artifacts:
+  files:
+    - '**/*'
